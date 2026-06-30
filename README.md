@@ -33,12 +33,12 @@ This repository focuses not just on working setups, but also:
 
 ```
 Proxmox VE Host
-├── Debian VM
+├── VM                  (Debian 12)
 │   ├── Ollama          (local LLM inference)
 │   ├── Open WebUI      (chat interface)
 │   └── n8n             (workflow automation / agent ecexution)
 │
-└── LXC Container  (Docker host)
+└── LXC Container       (docker host)
     ├── Portainer       (container management)
     └── AdGuard Home    (DNS-level ad blocking)
 
