@@ -11,7 +11,8 @@ Before installing Proxmox, the following BIOS settings were configured:
 
 - **Virtualization (VT-x):** Enabled
 - **VT-d (IOMMU):** Enabled — required for GPU passthrough later
-- **`<!-- TODO: add any other BIOS changes made -->`**
+- **Above 4G Decoding:** Enabled — required for GPU passthrough; without this the VM fails to properly map the GPU's memory
+- **Resizable BAR:** Disabled — the GTX 1080 (Pascal architecture) does not support it
 
 > BIOS settings may vary by motherboard. On ASUS Strix Z370-H Gaming these are found under **Advanced → CPU Configuration** and **Advanced → System Agent Configuration**.
 
@@ -28,19 +29,23 @@ Downloaded Proxmox VE 8.x ISO from [proxmox.com](https://www.proxmox.com/en/down
 1. Boot from USB
 2. Select **Install Proxmox VE (Graphical)**
 3. Accept EULA
-4. **Target disk:** `<!-- TODO: confirm which NVMe was selected as boot drive -->`
-5. **Locale:** `<!-- TODO: timezone, country, keyboard -->`
+4. **Target disk:** 
+5. **Locale:** `
 6. Set root password and email
 7. **Network configuration:**
-   - Hostname: `<!-- TODO: e.g. proxmox.local -->`
-   - IP Address: `<!-- TODO: static IP used -->`
-   - Gateway: `<!-- TODO: -->`
-   - DNS: `<!-- TODO: -->`
+   - Hostname: 
+   - IP Address: 
+   - Gateway: 
+   - DNS: 
 8. Complete installation and reboot
 
 ---
 
 ## Post-Installation
+
+## Kernel Version Note
+
+Proxmox originally shipped with kernel 6.8.12-9-pve, later auto-updated to 6.8.12-29-pve. This kernel version is incompatible with NVIDIA's last Pascal-supporting driver (525.x) — see GPU passthrough documentation for the full downgrade procedure to kernel 6.5.13-1-pve.
 
 ### Access the Web UI
 
@@ -64,9 +69,9 @@ apt update && apt full-upgrade -y
 
 ### Storage Configuration
 
-The system uses 2x 256GB NVMe drives.
-
-`<!-- TODO: describe how storage was configured — e.g. one for Proxmox OS, one for VM/CT storage, or ZFS mirror -->`
+The system uses 2x 256GB NVMe drives:
+- NVMe 1: Proxmox host OS and ISO storage
+- NVMe 2: VM and container disk storage
 
 ---
 
